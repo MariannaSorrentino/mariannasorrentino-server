@@ -36,8 +36,8 @@ app.use(cors());
  app.get('/', (req, resp)=>{
    resp.status(200).send('API mariannasorrentino.com');
  });
-// POST /users - inserire un nuovo utente
- app.post('/utenti', (req, res) => {
+// POST /utente - inserire un nuovo utente
+ app.post('/utente', (req, res) => {
    var body = _.pick(req.body, ['utente', 'password']);
    var ute = new Utente(body);
 
@@ -118,9 +118,9 @@ app.get('/citazioni', authenticate, (req, resp)=>{
 // inserimento nuovo Contenuto - POST /contenuto 
 app.post('/contenuto', authenticate, (req, res) => {
 
-  var body = _.pick(req.body, ['sezione','titolo', 'corpo', 'lingua','attivo', 'autore', 'commento', 
-                               'multimedia', 'album','campi' , 'links']);
-  //var body = req.body;
+  //var body = _.pick(req.body, ['sezione','titolo', 'corpo', 'lingua','attivo', 'autore', 'commento', 
+  //                             'multimedia', 'album','campi' , 'links']);
+  var body = req.body;
 
   var contenuto = new Contenuto(body);
 
@@ -147,8 +147,9 @@ app.post('/contenuto', authenticate, (req, res) => {
 // inserimento nuova Sezione - POST /sezione 
 app.post('/sezione', authenticate, (req, res) => {
 
-  var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
-                               'attiva', 'visibile', 'url', 'multimedia']);
+  //var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
+  //                             'attiva', 'visibile', 'url', 'multimedia']);
+  var body = req.body;
 
   var sezione = new Sezione(body);
 
