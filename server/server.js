@@ -33,8 +33,11 @@ app.use(cors());
    next();
  });
   
+ app.get('/', (req, resp)=>{
+   res.status(200).send('API mariannasorrentino.com');
+ });
 // POST /users - inserire un nuovo utente
- app.post('/utenti', (req, res) => {
+ app.post('/utenti', authenticate, (req, res) => {
    var body = _.pick(req.body, ['utente', 'password']);
    var ute = new Utente(body);
 
@@ -54,7 +57,7 @@ app.use(cors());
 
  // POST /utenti/login - effettua il login ovvero se l'utente è censito calcola il suo token lo memorizza 
 //  nella tabella e lo restituisce all'utente nella response
- app.post('/utenti/login', (req, res) => {
+ app.post('/utenti/login', authenticate, (req, res) => {
 
    var body = _.pick(req.body, ['utente', 'password']);
    console.log('BODY', body);
@@ -86,7 +89,7 @@ app.use(cors());
 //Citazioni API
 
 // inserimento nuova Citazione - POST /citazione ????-ricordarsi di proteggere la rotta-????
-app.post('/citazione', (req, res) => {
+app.post('/citazione', authenticate, (req, res) => {
 
   var body = _.pick(req.body, ['id', 'commento', 'corpo', 'autore', 'libro']);
    
@@ -113,7 +116,7 @@ app.get('/citazioni', authenticate, (req, resp)=>{
 //Contenuti API
 
 // inserimento nuovo Contenuto - POST /contenuto ????-ricordarsi di proteggere la rotta-????
-app.post('/contenuto', (req, res) => {
+app.post('/contenuto', authenticate, (req, res) => {
 
   var body = _.pick(req.body, ['sezione','titolo', 'corpo', 'lingua','attivo', 'autore', 'commento', 
                                'multimedia', 'album','campi' , 'links']);
@@ -142,7 +145,7 @@ app.post('/contenuto', (req, res) => {
  //Sezioni API
 
 // inserimento nuova Sezione - POST /sezione ????-ricordarsi di proteggere la rotta-????
-app.post('/sezione', (req, res) => {
+app.post('/sezione', authenticate, (req, res) => {
 
   var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
                                'attiva', 'visibile', 'url', 'multimedia']);
@@ -170,7 +173,7 @@ app.post('/sezione', (req, res) => {
  //Viaggi API
 
 // inserimento nuovo Viaggio- POST /viaggio ????-ricordarsi di proteggere la rotta-????
-app.post('/viaggio', (req, res) => {
+app.post('/viaggio', authenticate, (req, res) => {
 
   //var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
   //                             'attiva', 'visibile', 'url', 'multimedia']);

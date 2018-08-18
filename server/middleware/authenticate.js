@@ -1,4 +1,4 @@
-var {User} = require('./../models/user');
+
 var {Utente} = require('./../models/utente');
 
 var authenticate = (req, res, next) => {
@@ -12,7 +12,7 @@ var authenticate = (req, res, next) => {
     req.utente = ute;
     req.token = token;
     next();
-    
+
     }).catch((e) => {
       res.status(401).send('401');
     });
