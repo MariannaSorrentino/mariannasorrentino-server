@@ -34,7 +34,7 @@ app.use(cors());
  });
   
  app.get('/', (req, resp)=>{
-   res.status(200).send('API mariannasorrentino.com');
+   resp.status(200).send('API mariannasorrentino.com');
  });
 // POST /users - inserire un nuovo utente
  app.post('/utenti', authenticate, (req, res) => {
