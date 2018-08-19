@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 var ContenutoSchema = new mongoose.Schema({
+  
   id:{type: Number, trim: true, minlength: 1, unique: true },
 
   sezione: {type: String, require: true },

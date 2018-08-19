@@ -5,26 +5,13 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
 var UtenteSchema = new mongoose.Schema({
-  utente:{
-      type:String,
-      required:true,
-      unique:true
-  },
-  password: {
-    type: String,
-    require: true,
-    minlength: 6
-  },
-  tokens: [{
-    access: {
-      type: String,
-      required: true
-    },
-    token: {
-      type: String,
-      required: true
-    }
-  }]
+
+  utente:{type:String, required:true, unique:true },
+
+  password:{type: String, require: true, minlength: 6},
+
+  tokens: [{ access: { type: String, required: true },
+             token: {  type: String,  required: true }}]
 });
 
 UtenteSchema.methods.toJSON = function () {
@@ -60,13 +47,10 @@ UtenteSchema.statics.findByToken = function (token) {
   var Utente = this;
   var decoded;
 
-  console.log('token', token);
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('decoded', decoded);
 
   } catch (e) {
-    console.log('catch', e);
     return Promise.reject();
   }
 

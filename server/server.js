@@ -3,19 +3,15 @@ require('./config/config');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
-//const {ObjectID} = require('mongodb');
 var cors = require('cors')
 
-var {mongoose} = require('./db/mongoose');
+//var {mongoose} = require('./db/mongoose');
 var {Citazione} = require('./models/model/citazione');
 var {Contenuto} = require('./models/model/contenuto');
 var {Sezione} = require('./models/model/sezione');
 var {Viaggio} = require('./models/model/viaggio');
 
-//var {Todo} = require('./models/todo');
-//var {User} = require('./models/user');
 var {Utente} = require('./models/utente');
-
 
 var {authenticate} = require('./middleware/authenticate');
 
@@ -51,16 +47,14 @@ app.use(cors());
 });
 // GET /utenti/me - a partire dal token presente nell'header restituisce l'utente a cui il token appartiene
  app.get('/utenti/me', authenticate, (req, res) => {
-    //console.log('/utenti/me', req);
     res.send(req.utente);
  });
 
  // POST /utenti/login - effettua il login ovvero se l'utente è censito calcola il suo token lo memorizza 
 //  nella tabella e lo restituisce all'utente nella response
- app.post('/utenti/login', authenticate, (req, res) => {
+ app.post('/utenti/login', (req, res) => {
 
    var body = _.pick(req.body, ['utente', 'password']);
-   console.log('BODY', body);
 
    Utente.findByCredentials(body.utente, body.password).then((utente) => {
      
@@ -76,9 +70,7 @@ app.use(cors());
 
  // DELETE /utenti/me/token - dal token evince l'utente e cancella il token dalla tabella utenti
  app.delete('/utenti/me/token', authenticate, (req, res) => {
-   console.log('DELETE token', req.utente);
    req.utente.removeToken(req.token).then(() => {
-     console.log('token rimosso');
      res.status(200).send('Token rimosso');
    }, () => {
      res.status(400).send();
@@ -118,9 +110,9 @@ app.get('/citazioni', authenticate, (req, resp)=>{
 // inserimento nuovo Contenuto - POST /contenuto 
 app.post('/contenuto', authenticate, (req, res) => {
 
-  //var body = _.pick(req.body, ['sezione','titolo', 'corpo', 'lingua','attivo', 'autore', 'commento', 
-  //                             'multimedia', 'album','campi' , 'links']);
-  var body = req.body;
+  var body = _.pick(req.body, ['sezione','titolo', 'corpo', 'lingua','attivo', 'autore', 'commento', 
+                               'multimedia', 'album','campi' , 'links']);
+  //var body = req.body;
 
   var contenuto = new Contenuto(body);
 
@@ -147,9 +139,9 @@ app.post('/contenuto', authenticate, (req, res) => {
 // inserimento nuova Sezione - POST /sezione 
 app.post('/sezione', authenticate, (req, res) => {
 
-  //var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
-  //                             'attiva', 'visibile', 'url', 'multimedia']);
-  var body = req.body;
+  var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
+                               'attiva', 'visibile', 'url', 'multimedia']);
+  //var body = req.body;
 
   var sezione = new Sezione(body);
 
@@ -176,10 +168,10 @@ app.post('/sezione', authenticate, (req, res) => {
 // inserimento nuovo Viaggio- POST /viaggio 
 app.post('/viaggio', authenticate, (req, res) => {
 
-  //var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
-  //                             'attiva', 'visibile', 'url', 'multimedia']);
+  var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
+                               'attiva', 'visibile', 'url', 'multimedia']);
 
-  var body = req.body;
+  //var body = req.body;
 
   var viaggio = new Viaggio(body);
 

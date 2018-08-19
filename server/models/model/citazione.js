@@ -2,34 +2,18 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 var CitazioneSchema = new mongoose.Schema({
-  id:{
-    type: Number,
-    trim: true,
-    minlength: 1,
-    unique: true
-  },
-  commento: {
-    type: String,
-    require: true
-  },
-  corpo:{
-      type:String,
-      required:true,
-      minlength:1
-  },
-  autore:{
-    type:String,
-    required:true,
-    minlength:1   
-  },
-  libro:{
-    type:String,
-    required:true,
-    minlength:1
-  },
-  dataCreate:{
-    type:Date
-  }
+
+  id:{type: Number, trim: true, minlength: 1, unique: true },
+  
+  commento: {type: String, require: true },
+
+  corpo:{type:String, required:true, minlength:1 },
+
+  autore:{ type:String, required:true, minlength:1 },
+  
+  libro:{type:String, required:true, minlength:1 },
+  
+  dataCreate:{type:Date }
 });
 
 CitazioneSchema.methods.toJSON = function () {
@@ -52,7 +36,6 @@ CitazioneSchema.pre('save', function (next) {
 
         citazione.id = (cit)? cit.id + 1 : 1;
         citazione.dataCreate = new Date();
-        console.log('citazione:',citazione);
         next();
     });
 });
@@ -60,7 +43,6 @@ CitazioneSchema.pre('save', function (next) {
 CitazioneSchema.statics.findAllCitazioni = function () {
     var Citazione = this;
     return Citazione.find({},['id', 'commento', 'corpo', 'autore', 'libro', 'dataCreate']).sort({dataCreate: 'descending'});
-
 };
 
 
