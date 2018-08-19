@@ -168,10 +168,10 @@ app.post('/sezione', authenticate, (req, res) => {
 // inserimento nuovo Viaggio- POST /viaggio 
 app.post('/viaggio', authenticate, (req, res) => {
 
-  var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
-                               'attiva', 'visibile', 'url', 'multimedia']);
+  //var body = _.pick(req.body, ['id', 'nome', 'descrizione', 'progressivoPresentazione', 'etichetta',
+  //                             'attiva', 'visibile', 'url', 'multimedia']);
 
-  //var body = req.body;
+  var body = req.body;
 
   var viaggio = new Viaggio(body);
 
