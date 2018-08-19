@@ -33,7 +33,7 @@ app.use(cors());
    resp.status(200).send('API mariannasorrentino.com');
  });
 // POST /utente - inserire un nuovo utente
- app.post('/utente', (req, res) => {
+ app.post('/utente', authenticate, (req, res) => {
    var body = _.pick(req.body, ['utente', 'password']);
    var ute = new Utente(body);
 
@@ -67,18 +67,6 @@ app.use(cors());
      res.status(400).send(e);
   });
  });
-
-//  app.post('/users/login', (req, res) => {
-//   var body = _.pick(req.body, ['email', 'password']);
-
-//   User.findByCredentials(body.email, body.password).then((user) => {
-//     return user.generateAuthToken().then((token) => {
-//       res.header('x-auth', token).send(user);
-//     });
-//   }).catch((e) => {
-//     res.status(400).send();
-//   });
-// });
 
  // DELETE /utenti/me/token - dal token evince l'utente e cancella il token dalla tabella utenti
  app.delete('/utenti/me/token', authenticate, (req, res) => {
