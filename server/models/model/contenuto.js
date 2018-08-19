@@ -97,21 +97,21 @@ var ContenutoSchema = new mongoose.Schema({
     id:{
       type:Number,
       required:true,
-      unique:true
+      unique:false
     },  
     tipo:{
       type:String,
-      required:true,
+      required:false,
       minlength:3
     },
     titolo:{
       type:String,
-      required:true,
+      required:false,
       minlength:1
     },
     url:{
       type:String,
-      required:true,
+      required:false,
       minlength:1
     },
     urls:{
@@ -124,7 +124,7 @@ var ContenutoSchema = new mongoose.Schema({
     },
     data:{
       type:String,
-      required:true,
+      required:false,
       default: Date.now
     },
     luogo:{
