@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors')
 
-//var {mongoose} = require('./db/mongoose');
+var {mongoose} = require('./db/mongoose');
 var {Citazione} = require('./models/model/citazione');
 var {Contenuto} = require('./models/model/contenuto');
 var {Sezione} = require('./models/model/sezione');
@@ -52,21 +52,33 @@ app.use(cors());
 
  // POST /utenti/login - effettua il login ovvero se l'utente è censito calcola il suo token lo memorizza 
 //  nella tabella e lo restituisce all'utente nella response
- app.post('/utenti/login', (req, res) => {
+ app.post('/utente/login', (req, res) => {
 
    var body = _.pick(req.body, ['utente', 'password']);
 
-   Utente.findByCredentials(body.utente, body.password).then((utente) => {
-     
-     return utente.generateAuthToken();
-    }).then((token) => {
-    //res.header('x-auth', token).send();
-    res.status(200).send({'token':token});
+   //var body = req.body;
 
-  }).catch((e) => {
+  Utente.findByCredentials(body['utente'], body['password']).then((utente) => {
+
+    return utente.generateAuthToken()}).then((token) => {
+    //res.header('x-auth', token).send();
+      res.status(200).send({'token':token});
+    }).catch((e) => {
      res.status(400).send(e);
-   });
+  });
  });
+
+//  app.post('/users/login', (req, res) => {
+//   var body = _.pick(req.body, ['email', 'password']);
+
+//   User.findByCredentials(body.email, body.password).then((user) => {
+//     return user.generateAuthToken().then((token) => {
+//       res.header('x-auth', token).send(user);
+//     });
+//   }).catch((e) => {
+//     res.status(400).send();
+//   });
+// });
 
  // DELETE /utenti/me/token - dal token evince l'utente e cancella il token dalla tabella utenti
  app.delete('/utenti/me/token', authenticate, (req, res) => {

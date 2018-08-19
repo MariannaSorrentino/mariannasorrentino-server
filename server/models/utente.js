@@ -24,8 +24,8 @@ UtenteSchema.methods.toJSON = function () {
 UtenteSchema.methods.generateAuthToken = function () {
   var ute = this;
   var access = 'auth';
-  var token = jwt.sign({_id: ute._id.toHexString(), access}, process.env.JWT_SECRET).toString();
-
+  let token = jwt.sign({_id: ute._id.toHexString(), access}, process.env.JWT_SECRET).toString();
+  
   ute.tokens.push({access, token});
 
   return ute.save().then(() => {
@@ -61,14 +61,13 @@ UtenteSchema.statics.findByToken = function (token) {
   });
 };
 
-UtenteSchema.statics.findByCredentials = function (utente, password) {
-  var Utente = this;
+UtenteSchema.statics.findByCredentials = function (ute, password) {
 
-  return Utente.findOne({utente}).then((ute) => {
+  var Utente = this;
+   return Utente.findOne({utente:ute}).then((ute) => {
     if (!ute) {
       return Promise.reject();
     }
-
     return new Promise((resolve, reject) => {
       // Use bcrypt.compare to compare password and ute.password
       bcrypt.compare(password, ute.password, (err, res) => {
