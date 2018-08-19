@@ -185,7 +185,7 @@ app.post('/viaggio', authenticate, (req, res) => {
 
  // GET /viaggi
  app.get('/viaggi', authenticate, (req, resp)=>{
-   Viaggi.findAllViaggi().then((viaggi)=>{
+   Viaggio.findAllViaggi().then((viaggi)=>{
      resp.status(200).send(viaggi);
    }).catch((e) => {
      resp.status(400).send(e);
