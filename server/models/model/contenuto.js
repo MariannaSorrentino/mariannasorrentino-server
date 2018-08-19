@@ -31,7 +31,7 @@ var ContenutoSchema = new mongoose.Schema({
                     autore:{type:String, required:false }}, required:true},
 
   album:{type:[{id:{type:Number, required:false},  
-                tipo:{type:String, required:falsec},
+                tipo:{type:String, required:false},
                 titolo:{type:String, required:false },
                 url:{type:String, required:false },
                 urls:{type:[String], required:false},
