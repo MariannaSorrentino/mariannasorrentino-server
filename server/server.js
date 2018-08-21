@@ -73,7 +73,6 @@ app.use(cors());
    console.log('prima di remove token', req.token);
    req.utente.removeToken(req.token).then(() => {
      res.status(200).send({'esito':'Token rimosso'});
-     console.log('dopo remove token', req.token);
 
    }, () => {
      res.status(400).send();
